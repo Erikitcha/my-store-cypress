@@ -13,8 +13,7 @@ pids
 *.seed
 *.pid.lock
 
-node_modules/
-jspm_packages/
+node_modules
 
 .npm
 

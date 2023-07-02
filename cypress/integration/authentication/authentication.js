@@ -1,3 +1,5 @@
+import loc from '../../support/locators.js'
+
 const { Given, When, Then, And } = require('cypress-cucumber-preprocessor/steps');
 const { faker } = require('@faker-js/faker');
 
@@ -9,26 +11,26 @@ const pwd = faker.internet.password();
 
 Given('the user is on the create an account page', () => {
   cy.visit('http://www.automationpractice.pl/index.php?controller=authentication&back=identity#account-creation');
-  cy.get('#create-account_form input[type="text"]').type(email);
-  cy.get('.submit button#SubmitCreate').click();
+  cy.get(loc.USER_REGISTRATION.EMAIL_ACCOUNT).type(email);
+  cy.get(loc.BTN.BTN_SUBMIT_CREATE).click();
 });
 
 When('the user fill in the fields title, first name, last name, email, password, Date of Birth', () => {
-  cy.get('#id_gender2').click();
-  cy.get('#customer_firstname').type(firstName);
-  cy.get('#customer_lastname').type(lastName);
-  cy.get('#passwd').type(pwd);
-  cy.get('#days').select(faker.number.int({min: 1, max: 31}));
-  cy.get('#months').select(faker.date.month());
-  cy.get('#years').select('2023');
+  cy.get(loc.USER_REGISTRATION.GENDER_MRS).click();
+  cy.get(loc.USER_REGISTRATION.FIRSTNAME).type(firstName);
+  cy.get(loc.USER_REGISTRATION.LASTNAME).type(lastName);
+  cy.get(loc.USER_REGISTRATION.PASSWORD).type(pwd);
+  cy.get(loc.USER_REGISTRATION.DAYS).select(faker.number.int({min: 1, max: 31}));
+  cy.get(loc.USER_REGISTRATION.MONTH).select(faker.date.month());
+  cy.get(loc.USER_REGISTRATION.YEAR).select('2000');
 });
 
 And('clicks on the register button', () => {
-  cy.get('#submitAccount > span').click();
+  cy.get(loc.BTN.BTN_REGISTRY).click();
 });
 
 Then('the website should show the message "Your account has been created"', () => {
-  cy.get('.alert').contains('Your account has been created');
+  cy.get(loc.ALERT.MESSAGE).contains('Your account has been created');
 });
 
 Given('the user is on the login page', () => {
@@ -36,12 +38,12 @@ Given('the user is on the login page', () => {
 });
 
 When('the user insert your username, password', ()=> {
-  cy.get('#email').type(email);
-  cy.get('#passwd').type(pwd)
+  cy.get(loc.LOGIN.EMAIL).type(email);
+  cy.get(loc.LOGIN.PASSWORD).type(pwd)
 });
 
 And('clicks on the login button', () => {
-  cy.get('#SubmitLogin > span').click();
+  cy.get(loc.BTN.BTN_LOGIN).click();
 })
 
 Then('the user is redirected to my account page', () => {
@@ -50,7 +52,7 @@ Then('the user is redirected to my account page', () => {
 })
 
 And('the username must appear in the header', ()=> {
-  cy.get('.account > span').contains(firstName);
+  cy.get(loc.HEADER.NAME).contains(firstName);
 })
 
 Given('the user is on the login page', () => {
@@ -58,16 +60,16 @@ Given('the user is on the login page', () => {
 });
 
 When('the user insert nonexistent username, password', ()=> {
-  cy.get('#email').type(faker.internet.email());
-  cy.get('#passwd').type(faker.internet.password());
+  cy.get(loc.LOGIN.EMAIL).type(faker.internet.email());
+  cy.get(loc.LOGIN.PASSWORD).type(faker.internet.password());
 });
 
 And('clicks on the login button', () => {
-  cy.get('#SubmitLogin > span').click();
+  cy.get(loc.BTN.BTN_LOGIN).click();
 })
 
 Then('the website should show the message "Authentication failed"', () => {
-  cy.get('#center_column > :nth-child(2)').contains("Authentication failed");
+  cy.get(loc.ALERT.ERROR_LOGIN).contains("Authentication failed");
 })
 
 Given('the user is on the login page', () => {
@@ -75,14 +77,14 @@ Given('the user is on the login page', () => {
 })
 
 And('does not fill in the fields email, password', () => {
-  cy.get('#email').clear();
-  cy.get('#passwd').clear();
+  cy.get(loc.LOGIN.EMAIL).clear();
+  cy.get(loc.LOGIN.PASSWORD).clear();
 })
 
 When('the user clicks on the login button', () => {
-  cy.get('#SubmitLogin > span').click();
+  cy.get(loc.BTN.BTN_LOGIN).click();
 })
 
 Then('an alert message should be displayed', ()=> {
-  cy.get('#center_column > :nth-child(2)').contains("required");
+  cy.get(loc.ALERT.REQUIRED_FIELD).contains("required");
 })

@@ -5,6 +5,11 @@ Feature: User Registration
     When the user clicks on the "Manage my personal information" link
     Then the user should be redirected to the authentication page
 
+  Scenario: User registration without required fields
+    Given the user is on the create an account page
+    And the user does not fill required fields
+    When the user clicks on the register button
+    Then an alert message should be displayed 
 
   Scenario: Registering user
     Given the user is on the create an account page
@@ -17,9 +22,3 @@ Feature: User Registration
     When the user enters a pre-registered email
     And clicks on the submit button
     Then an error message should be displayed
-@focus 
-  Scenario: User registration without required fields
-    Given the user is on the create an account page
-    And the user does not fill required fields
-    When the user clicks on the register button
-    Then an alert message should be displayed 

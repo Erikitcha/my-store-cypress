@@ -1,7 +1,9 @@
-const { Given, When, Then, And } = require('cypress-cucumber-preprocessor/steps');
-const { faker } = require('@faker-js/faker');
+import loc from '../../support/locators.js'
 
 require("@4tw/cypress-drag-drop");
+
+const { Given, When, Then} = require('cypress-cucumber-preprocessor/steps');
+const { faker } = require('@faker-js/faker');
 
 Given('the user is on the homepage', () => {
     cy.visit('http://www.automationpractice.pl/index.php');
@@ -21,11 +23,11 @@ Given('the user is on products page', () => {
 });
 
 When('the user clicks on the top option in the category filter', () => {
-    cy.get('#layered_category_4').click();
+    cy.get(loc.FILTER.TOP_CATEGORY).click();
 });
 
 Then('the webpage only shows products from the top category', () => {
-    cy.get('#enabled_filters').should('be.visible').contains('Categories: Tops');
+    cy.get(loc.FILTER.ENABLE_FILTER).should('be.visible').contains('Categories: Tops');
 });
 
 Given('the user is on products page', () => {
@@ -33,11 +35,11 @@ Given('the user is on products page', () => {
 });
 
 When('the user clicks on the S option in the size filter', () => {
-    cy.get('#layered_id_attribute_group_1').click();
+    cy.get(loc.FILTER.S_SIZE).click();
 });
 
 Then('the webpage only shows products from the S Size', () => {
-    cy.get('#enabled_filters').should('be.visible').contains('Size: S');
+    cy.get(loc.FILTER.ENABLE_FILTER).should('be.visible').contains('Size: S');
 });
 
 Given('the user is on products page', () => {
@@ -45,11 +47,11 @@ Given('the user is on products page', () => {
 });
 
 When('the user clicks on the Blue option in the Color filter', () => {
-    cy.get('#layered_id_attribute_group_14').click();
+    cy.get(loc.FILTER.BLUE_COLOR).click();
 });
 
 Then('the webpage only shows blue color products', () => {
-    cy.get('#enabled_filters').should('be.visible').contains('Color: Blue');
+    cy.get(loc.FILTER.ENABLE_FILTER).should('be.visible').contains('Color: Blue');
 });
 
 Given('the user is on products page', () => {
@@ -57,11 +59,11 @@ Given('the user is on products page', () => {
 });
 
 When('the user clicks on the Colorful Dress in the Proporties filter', () => {
-    cy.get('#layered_id_feature_18').click();
+    cy.get(loc.FILTER.COLORFUL_DRESS).click();
 });
 
 Then('the webpage only shows Colorful Dress products', () => {
-    cy.get('#enabled_filters').should('be.visible').contains('Properties: Colorful Dress');
+    cy.get(loc.FILTER.ENABLE_FILTER).should('be.visible').contains('Properties: Colorful Dress');
 });
 
 Given('the user is on products page', () => {
@@ -69,11 +71,11 @@ Given('the user is on products page', () => {
 });
 
 When('the user clicks on the Cottom in the Compositions filter', () => {
-    cy.get('#layered_id_feature_5').click();
+    cy.get(loc.FILTER.COTTOM_COMPOSITION).click();
 });
 
 Then('the webpage only shows Cottom products', () => {
-    cy.get('#enabled_filters').should('be.visible').contains('Compositions: Cotton');
+    cy.get(loc.FILTER.ENABLE_FILTER).should('be.visible').contains('Compositions: Cotton');
 });
 
 Given('the user is on products page', () => {
@@ -81,11 +83,11 @@ Given('the user is on products page', () => {
 });
 
 When('the user clicks on the Casual in the Style filter', () => {
-    cy.get('#layered_id_feature_11').click();
+    cy.get(loc.FILTER.CASUAL).click();
 });
 
 Then('the webpage only shows Casual products', () => {
-    cy.get('#enabled_filters').should('be.visible').contains('Styles: Casual');
+    cy.get(loc.FILTER.ENABLE_FILTER).should('be.visible').contains('Styles: Casual');
 });
 
 Given('the user is on products page', () => {
@@ -93,11 +95,11 @@ Given('the user is on products page', () => {
 });
 
 When('the user clicks in stock in the Availability filter', () => {
-    cy.get('#layered_quantity_1').click();
+    cy.get(loc.FILTER.IN_STOCK).click();
 });
 
 Then('the webpage only shows in stock products', () => {
-    cy.get('#enabled_filters').should('be.visible').contains('Availability: In stock');
+    cy.get(loc.FILTER.ENABLE_FILTER).should('be.visible').contains('Availability: In stock');
 });
 
 Given('the user is on products page', () => {
@@ -105,11 +107,11 @@ Given('the user is on products page', () => {
 });
 
 When('the user clicks in new in the Condition filter', () => {
-    cy.get('#layered_condition_new').click();
+    cy.get(loc.FILTER.NEW).click();
 });
 
 Then('the webpage only shows new products', () => {
-    cy.get('#enabled_filters').should('be.visible').contains('Condition: New');
+    cy.get(loc.FILTER.ENABLE_FILTER).should('be.visible').contains('Condition: New');
 });
 
 Given('the user is on products page', () => {
@@ -117,11 +119,12 @@ Given('the user is on products page', () => {
 });
 
 When('the user drags the bar to the right side by 20%', () => {
+
     const targetValue = 0.2
 
     cy.get('.ui-slider-range').first().then((slider) => {
+       
         const sliderButtonSelector = '[style="left: 0%;"]'
-
         const sliderButton = cy.get(sliderButtonSelector).first()
         const sliderBB = slider.get(0).getBoundingClientRect();
 
@@ -136,5 +139,5 @@ When('the user drags the bar to the right side by 20%', () => {
 });
 
 Then('the webpage only shows products at the searched price percentage', () => {
-    cy.get('#layered_price_range')
+    cy.get(loc.FILTER.PRICE_RANGE)
 });

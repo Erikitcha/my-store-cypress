@@ -44,7 +44,7 @@ Scenario: Filter by new products
     Given the user is on products page
     When the user clicks in new in the Condition filter
     Then the webpage only shows new products
-@focus 
+ 
 Scenario: Filter by Price
     Given the user is on products page
     When the user drags the bar to the right side by 20%

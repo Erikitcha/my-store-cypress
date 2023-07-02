@@ -1,3 +1,5 @@
+import loc from '../../support/locators.js'
+
 const { Given, When, Then, And } = require('cypress-cucumber-preprocessor/steps');
 const { faker } = require('@faker-js/faker');
 
@@ -11,7 +13,7 @@ Given('the user is on the website homepage', () => {
 });
   
 When('the user clicks on the "Manage my personal information" link', () => {
-  cy.get('a[title="Manage my personal information"]').click();
+  cy.get(loc.BTN.BTN_MY_PERSONAL_INFO).click();
 });
   
 Then('the user should be redirected to the authentication page', () => {
@@ -21,47 +23,47 @@ Then('the user should be redirected to the authentication page', () => {
 
 Given('the user is on the create an account page', () =>{
   cy.visit('http://www.automationpractice.pl/index.php?controller=authentication&back=identity#account-creation');
-  cy.get('#create-account_form input[type="text"]').type(email);
-  cy.get('.submit button#SubmitCreate').click();
+  cy.get(loc.USER_REGISTRATION.EMAIL_ACCOUNT).type(email);
+  cy.get(loc.BTN.BTN_SUBMIT_CREATE).click();
 })
 
 And('the user does not fill required fields', () =>{
-    cy.get('#customer_firstname').clear();
-    cy.get('#customer_lastname').clear();
-    cy.get('#email').clear();
-    cy.get('#passwd').clear();
+    cy.get(loc.USER_REGISTRATION.FIRSTNAME).clear();
+    cy.get(loc.USER_REGISTRATION.LASTNAME).clear();
+    cy.get(loc.USER_REGISTRATION.EMAIL).clear();
+    cy.get(loc.USER_REGISTRATION.PASSWORD).clear();
 })
 
 When('the user clicks on the register button', () =>{
-  cy.get('#submitAccount > span').click();
+  cy.get(loc.BTN.BTN_REGISTRY).click();
 })
 
 Then('an alert message should be displayed', () =>{
-    cy.get('.alert').contains('is required');
+    cy.get(loc.ALERT.MESSAGE).contains('is required');
 })
 
 Given('the user is on the create an account page', () => {
   cy.visit('http://www.automationpractice.pl/index.php?controller=authentication&back=identity#account-creation');
-  cy.get('#create-account_form input[type="text"]').type(email);
-  cy.get('.submit button#SubmitCreate').click();
+  cy.get(loc.USER_REGISTRATION.EMAIL_ACCOUNT).type(email);
+  cy.get(loc.BTN.BTN_SUBMIT_CREATE).click();
 });
 
 When('the user fill in fill in the title field, first name, last name, email, password, Date of Birth', () =>{
-  cy.get('#id_gender2').click();
-  cy.get('#customer_firstname').type(firstName);
-  cy.get('#customer_lastname').type(lastName);
-  cy.get('#passwd').type(pwd);
-  cy.get('#days').select(faker.number.int({min: 1, max: 31}));
-  cy.get('#months').select(faker.date.month());
-  cy.get('#years').select('2023');
+  cy.get(loc.USER_REGISTRATION.GENDER_MRS).click();
+  cy.get(loc.USER_REGISTRATION.FIRSTNAME).type(firstName);
+  cy.get(loc.USER_REGISTRATION.LASTNAME).type(lastName);
+  cy.get(loc.USER_REGISTRATION.PASSWORD).type(pwd);
+  cy.get(loc.USER_REGISTRATION.DAYS).select(faker.number.int({min: 1, max: 31}));
+  cy.get(loc.USER_REGISTRATION.MONTH).select(faker.date.month());
+  cy.get(loc.USER_REGISTRATION.YEAR).select('2000');
 });
 
 And('clicks on the register button', () => {
-  cy.get('#submitAccount > span').click();
+  cy.get(loc.BTN.BTN_REGISTRY).click();
 });
 
 Then('the website should show the message "Your account has been created"', () => {
-  cy.get('.alert').contains('Your account has been created');
+  cy.get(loc.ALERT.MESSAGE).contains('Your account has been created');
 });
 
   
@@ -70,13 +72,13 @@ Given('the user is on the authentication page', () => {
 });
   
 When('the user enters a pre-registered email', () => {
-  cy.get('#create-account_form input[type="text"]').type(email);
+  cy.get(loc.USER_REGISTRATION.EMAIL_ACCOUNT).type(email);
 });
   
 And('clicks on the submit button', () => {
-  cy.get('.submit button#SubmitCreate').click();
+  cy.get(loc.BTN.BTN_SUBMIT_CREATE).click();
 });
   
 Then('an error message should be displayed', () => {
-  cy.get('.alert.alert-danger#create_account_error').should('be.visible');
+  cy.get(loc.ALERT.CREATE_ACCOUNT_ERROR).should('be.visible');
 });
