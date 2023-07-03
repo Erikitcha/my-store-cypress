@@ -49,3 +49,8 @@ Scenario: Filter by Price
     Given the user is on products page
     When the user drags the bar to the right side by 20%
     Then the webpage only shows products at the searched price percentage
+
+Scenario: Since you applied all the filters
+    Given the user is on products page
+    When choose a random product and add it to the cart
+    Then checks if the item has been add to the cart

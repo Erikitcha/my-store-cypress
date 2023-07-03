@@ -3,7 +3,7 @@ const { faker } = require("@faker-js/faker");
 const RANDOM_EMAIL = faker.internet.email();
 const RANDOM_PASSWORD = faker.internet.password();
 
-Cypress.Commands.add("fillAuthCampWithFaker", (selector, type) => {
+Cypress.Commands.add('fillAuthCampWithFaker', (selector, type) => {
   switch (type) {
     case "email":
       cy.get(selector).type(RANDOM_EMAIL);
