@@ -15,11 +15,11 @@ Given("the user is on the homepage", () => {
 });
 
 When("the user clicks on the woman option in the menu", () => {
-  cy.get(".sf-menu").contains("Women").click();
+  cy.get(loc.FILTER.CATEGORY_MENU).contains("Women").click();
 });
 
 Then("the webpage shows all the products", () => {
-  cy.get(".top-pagination-content > .product-count").contains("Showing 1");
+  cy.get(loc.FILTER.SHOWING_ITENS_COUNT_TEXT).contains("Showing 1");
 });
 
 Given("the user is on products page", () => {
@@ -152,17 +152,16 @@ Given("the user is on products page", () => {
   );
 });
 
-When("the user drags the bar to the right side by 20%", () => {
-  const targetValue = 0.3;
+When("the user drags the bar to the right side by 90%", () => {
+  const targetValue = 0.9;
 
-  cy.get(".ui-slider-range")
+  cy.get(loc.FILTER.PRICE_SLIDER)
     .first()
     .then((slider) => {
-      const sliderButtonSelector = '[style="left: 0%;"]';
-      const sliderButton = cy.get(sliderButtonSelector).first();
+      const sliderButton = cy.get(loc.FILTER.SLIDER_BUTTON_SELECTOR).first();
       const sliderBB = slider.get(0).getBoundingClientRect();
 
-      sliderButton.drag(sliderButtonSelector, {
+      sliderButton.drag(loc.FILTER.SLIDER_BUTTON_SELECTOR, {
         force: true,
         target: {
           x: sliderBB.width * targetValue,
@@ -174,38 +173,18 @@ When("the user drags the bar to the right side by 20%", () => {
 
 Then("the webpage only shows products at the searched price percentage", () => {
   cy.wait(2500);
-  cy.get("#layered_price_range").invoke("text").as("currentPriceRange");
+  cy.get(loc.FILTER.CURRENT_PRICE_RANGE_TEXT).invoke("text").as("currentPriceRange");
 
   cy.get("@currentPriceRange").then((currentPriceRange) => {
     const priceRangeParts = currentPriceRange.split(" - ");
     const minPrice = parseFloat(priceRangeParts[0].replace("$", ""));
     const maxPrice = parseFloat(priceRangeParts[1].replace("$", ""));
 
-    cy.get(".product_list .product-container").each(($product) => {
+    cy.get(loc.FILTER.FIRST_PRODUCT_IN_RANGE).each(($product) => {
       const priceText = $product.find(".content_price .price").text();
       const price = parseFloat(priceText.replace("$", ""));
 
       expect(price).to.be.within(minPrice, maxPrice);
     });
-  });
-});
-
-Given("the user is on products page", () => {
-  cy.visit(
-    "http://www.automationpractice.pl/index.php?id_category=3&controller=category"
-  );
-});
-
-When("choose a random product and add it to the cart", () => {
-  // Obter a lista de todos os produtos na página
-  cy.get(".product_list .product-container").then(($products) => {
-    // Obter um índice aleatório
-    const randomIndex = Math.floor(Math.random() * $products.length);
-
-    // Clicar no produto aleatório
-    cy.wrap($products[randomIndex]).click();
-
-    // Adicionar o produto ao carrinho
-    cy.get("#add_to_cart button").click();
   });
 });

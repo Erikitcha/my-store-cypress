@@ -18,7 +18,7 @@ Given("the user is on the create an account page", () => {
     "http://www.automationpractice.pl/index.php?controller=authentication&back=identity#account-creation"
   );
   cy.get(loc.USER_REGISTRATION.EMAIL_ACCOUNT).type(email);
-  cy.get(loc.BTN.BTN_SUBMIT_CREATE).click();
+  cy.get(loc.USER_REGISTRATION.BTN_REGISTRY).click();
 });
 
 When(
@@ -37,7 +37,7 @@ When(
 );
 
 And("clicks on the register button", () => {
-  cy.get(loc.BTN.BTN_REGISTRY).click();
+  cy.get(loc.USER_REGISTRATION.BTN_REGISTRY).click();
 });
 
 Then(
@@ -59,7 +59,7 @@ When("the user insert your username, password", () => {
 });
 
 And("clicks on the login button", () => {
-  cy.get(loc.BTN.BTN_LOGIN).click();
+  cy.get(loc.LOGIN.BTN_LOGIN).click();
 });
 
 Then("the user is redirected to my account page", () => {
@@ -83,7 +83,7 @@ When("the user insert nonexistent username, password", () => {
 });
 
 And("clicks on the login button", () => {
-  cy.get(loc.BTN.BTN_LOGIN).click();
+  cy.get(loc.LOGIN.BTN_LOGIN).click();
 });
 
 Then('the website should show the message "Authentication failed"', () => {
@@ -102,7 +102,7 @@ And("does not fill in the fields email, password", () => {
 });
 
 When("the user clicks on the login button", () => {
-  cy.get(loc.BTN.BTN_LOGIN).click();
+  cy.get(loc.LOGIN.BTN_LOGIN).click();
 });
 
 Then("an alert message should be displayed", () => {
